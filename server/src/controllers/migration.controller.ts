@@ -348,7 +348,7 @@ const finalizeMigrationInternal = async (user: IUser, res: Response): Promise<vo
                 retryable: true
             });
         } else {
-            res.status(500).json({ success: false, message: 'Migration failed' });
+        res.status(500).json({ success: false, message: 'Migration failed' });
         }
     }
 };
@@ -494,7 +494,7 @@ export const initiateMigration = async (req: Request, res: Response): Promise<vo
         
         await userDoc.save();
         console.log(`✅ Migration initiated. History entry added. Total entries: ${userDoc.migrationHistory.length}`);
-
+        
         // Determine redirect URL for new email based on whether account exists
         // Use the accountExists variable we already checked above
         let newEmailRedirectUrl = `${config.clientUrl}/migrate?token=${newEmailToken}&type=new`;
@@ -1048,9 +1048,9 @@ export const getMigrationHistory = async (req: Request, res: Response): Promise<
             let pendingFrom = migration.pendingFrom;
             
             // CRITICAL: If both emails are verified, status MUST be success (not pending or failed)
-            const currentVerified = migration.currentEmailVerified === true;
-            const newVerified = migration.newEmailVerified === true;
-            
+                const currentVerified = migration.currentEmailVerified === true;
+                const newVerified = migration.newEmailVerified === true;
+                
             if (currentVerified && newVerified) {
                 // Both verified - migration MUST be successful
                 displayStatus = 'success';

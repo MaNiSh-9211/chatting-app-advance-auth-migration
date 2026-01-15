@@ -9,6 +9,17 @@ export interface IUser extends Document {
     avatar?: string;
     bio?: string; // User bio/passage
     isEmailVerified: boolean;
+    // Chat App Features
+    customDisplayName?: string; // Override OAuth display name
+    customAvatar?: string; // Override OAuth avatar (uploaded image)
+    friends: mongoose.Types.ObjectId[]; // Array of friend user IDs
+    friendRequests: {
+        sent: mongoose.Types.ObjectId[]; // Friend requests sent by this user
+        received: mongoose.Types.ObjectId[]; // Friend requests received by this user
+    };
+    status: 'online' | 'offline' | 'away' | 'busy'; // User status
+    lastSeen?: Date; // Last seen timestamp
+    isProfilePublic: boolean; // Whether profile is public or private
     loginCount?: number;
     lastLogin?: Date;
     emailVerificationToken?: string;
@@ -106,6 +117,39 @@ const userSchema = new Schema<IUser>(
             type: String,
             maxlength: 500,
             trim: true,
+        },
+        // Chat App Features
+        customDisplayName: {
+            type: String,
+            trim: true,
+            maxlength: 50,
+        },
+        customAvatar: {
+            type: String, // URL to uploaded image
+        },
+        friends: [{
+            type: Schema.Types.ObjectId,
+            ref: 'User',
+        }],
+        friendRequests: {
+            sent: [{
+                type: Schema.Types.ObjectId,
+                ref: 'User',
+            }],
+            received: [{
+                type: Schema.Types.ObjectId,
+                ref: 'User',
+            }],
+        },
+        status: {
+            type: String,
+            enum: ['online', 'offline', 'away', 'busy'],
+            default: 'offline',
+        },
+        lastSeen: Date,
+        isProfilePublic: {
+            type: Boolean,
+            default: true,
         },
         isEmailVerified: {
             type: Boolean,

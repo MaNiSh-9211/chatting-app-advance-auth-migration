@@ -10,9 +10,15 @@ interface ApiResponse {
 interface AuthResponse extends ApiResponse {
     user?: {
         id: string;
+        _id: string; // Add MongoDB ID
         email: string;
         displayName: string;
+        customDisplayName?: string;
         avatar?: string;
+        customAvatar?: string;
+        bio?: string;
+        status?: string;
+        displayId?: string;
         isEmailVerified: boolean;
         provider?: string;
         createdAt?: string;
@@ -48,14 +54,18 @@ class ApiClient {
         return this.accessToken;
     }
 
-    private async request<T>(
+    public async request<T = any>(
         endpoint: string,
         options: RequestInit = {}
     ): Promise<T> {
         const headers: HeadersInit = {
-            'Content-Type': 'application/json',
             ...(options.headers || {}),
         };
+
+        // Don't set Content-Type for FormData, let browser set it with boundary
+        if (!(options.body instanceof FormData)) {
+            headers['Content-Type'] = 'application/json';
+        }
 
         if (this.accessToken) {
             (headers as Record<string, string>)['Authorization'] = `Bearer ${this.accessToken}`;
@@ -231,6 +241,15 @@ class ApiClient {
             method: 'PUT',
             body: JSON.stringify({ bio }),
         });
+    }
+
+    // User Search
+    async searchUserById(userId: string): Promise<ApiResponse & { user: any }> {
+        return this.request<ApiResponse & { user: any }>(`/users/id/${userId}`);
+    }
+
+    async searchUsers(query: string): Promise<ApiResponse & { users: any[] }> {
+        return this.request<ApiResponse & { users: any[] }>(`/users/search?query=${encodeURIComponent(query)}`);
     }
 
     // OAuth URLs

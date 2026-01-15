@@ -3,11 +3,16 @@ import { api, type AuthResponse } from '../api/client';
 import { saveRecentAccount } from '../utils/recentAccounts';
 
 interface User {
-    id: string;
+    id: string; // Keep for compatibility if used elsewhere
+    _id: string; // Add MongoDB ID
     email: string;
     displayName: string;
+    customDisplayName?: string;
     avatar?: string;
+    customAvatar?: string;
     bio?: string;
+    status?: string;
+    displayId?: string; // Add displayId
     isEmailVerified: boolean;
     provider?: string;
     createdAt?: string;

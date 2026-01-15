@@ -82,27 +82,34 @@ html {
   -moz-osx-font-smoothing: grayscale;
 }
 
-html, body {
+html,
+body {
   height: 100%;
   overflow-x: hidden;
-  scrollbar-width: none; /* Firefox */
-  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none;
+  /* Firefox */
+  -ms-overflow-style: none;
+  /* IE and Edge */
 }
 
 html::-webkit-scrollbar,
 body::-webkit-scrollbar {
-  display: none; /* Chrome, Safari, Opera */
+  display: none;
+  /* Chrome, Safari, Opera */
 }
 
 #root {
   min-height: 100%;
   overflow-x: hidden;
-  scrollbar-width: none; /* Firefox */
-  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none;
+  /* Firefox */
+  -ms-overflow-style: none;
+  /* IE and Edge */
 }
 
 #root::-webkit-scrollbar {
-  display: none; /* Chrome, Safari, Opera */
+  display: none;
+  /* Chrome, Safari, Opera */
 }
 
 body {
@@ -679,7 +686,7 @@ p {
   border: 1px solid rgba(255, 255, 255, 0.1);
   border-radius: var(--radius-2xl);
   padding: var(--spacing-10);
-  box-shadow: 
+  box-shadow:
     0 20px 60px rgba(0, 0, 0, 0.5),
     0 0 0 1px rgba(255, 255, 255, 0.05) inset,
     0 0 100px rgba(124, 58, 237, 0.1);
@@ -804,16 +811,84 @@ p {
   min-height: 100vh;
   display: flex;
   flex-direction: column;
+  position: relative;
+  overflow-x: hidden;
+  background: linear-gradient(180deg,
+      #0d0d15 0%,
+      #1a1a2e 25%,
+      #1e1e3e 50%,
+      #1a1a2e 75%,
+      #0d0d15 100%);
+}
+
+.dashboard-layout::before {
+  content: '';
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-image:
+    linear-gradient(rgba(167, 139, 250, 0.15) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(167, 139, 250, 0.15) 1px, transparent 1px);
+  background-size: 50px 50px;
+  background-position: center center;
+  pointer-events: none;
+  z-index: 0;
+  mask-image: radial-gradient(circle at 50% 50%, black, transparent 90%);
+  -webkit-mask-image: radial-gradient(circle at 50% 50%, black, transparent 90%);
+}
+
+.dashboard-layout::after {
+  content: '';
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background:
+    radial-gradient(circle at 20% 20%, rgba(124, 58, 237, 0.15) 0%, transparent 40%),
+    radial-gradient(circle at 80% 80%, rgba(236, 72, 153, 0.15) 0%, transparent 40%);
+  pointer-events: none;
+  z-index: 0;
+  animation: pulse 8s ease-in-out infinite;
 }
 
 .dashboard-header {
-  background: var(--color-bg-glass);
+  background: rgba(13, 13, 21, 0.6);
   backdrop-filter: blur(20px);
-  border-bottom: 1px solid var(--color-border);
+  border-bottom: 1px solid rgba(167, 139, 250, 0.2);
   padding: var(--spacing-4) var(--spacing-6);
   display: flex;
   align-items: center;
   justify-content: space-between;
+  gap: 2rem;
+}
+
+.dashboard-nav {
+  display: flex;
+  gap: 1rem;
+  flex: 1;
+  justify-content: center;
+}
+
+.nav-button {
+  padding: 0.75rem 1.5rem;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 12px;
+  color: rgba(255, 255, 255, 0.8);
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  font-size: 1rem;
+}
+
+.nav-button:hover {
+  background: rgba(255, 255, 255, 0.1);
+  border-color: rgba(124, 58, 237, 0.5);
+  color: white;
+  transform: translateY(-2px);
 }
 
 .dashboard-brand {
@@ -949,6 +1024,7 @@ p {
 }
 
 @keyframes pulse {
+
   0%,
   100% {
     opacity: 1;
@@ -964,6 +1040,7 @@ p {
 }
 
 @keyframes float {
+
   0%,
   100% {
     transform: translateY(0px) rotate(0deg);
@@ -975,6 +1052,7 @@ p {
 }
 
 @keyframes float-shape {
+
   0%,
   100% {
     transform: translate(0, 0) scale(1);
@@ -990,6 +1068,7 @@ p {
 }
 
 @keyframes pulse-glow {
+
   0%,
   100% {
     opacity: 0.3;
@@ -1034,7 +1113,7 @@ p {
 
 .form-input:focus {
   transform: translateY(-1px);
-  box-shadow: 
+  box-shadow:
     0 0 0 4px rgba(124, 58, 237, 0.1),
     0 4px 12px rgba(124, 58, 237, 0.2);
 }

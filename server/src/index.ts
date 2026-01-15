@@ -8,7 +8,13 @@ import { connectDatabase } from './config/database';
 import authRoutes from './routes/auth.routes';
 import migrationRoutes from './routes/migration.routes';
 import profileRoutes from './routes/profile.routes';
+import chatRoutes from './routes/chat.routes';
+import friendRoutes from './routes/friend.routes';
+import profilePostRoutes from './routes/profile-post.routes';
+import uploadRoutes from './routes/upload.routes';
+import userRoutes from './routes/user.routes';
 import { apiLimiter } from './middleware/limiter.middleware';
+import path from 'path';
 
 const app = express();
 
@@ -60,6 +66,9 @@ app.use(cookieParser());
 // Passport initialization
 app.use(passport.initialize());
 
+// Serve uploaded files
+app.use('/uploads', express.static(path.join(process.cwd(), 'server', 'uploads')));
+
 // Health check
 app.get('/health', (req, res) => {
     res.json({ status: 'ok', timestamp: new Date().toISOString() });
@@ -70,6 +79,11 @@ app.use('/api', apiLimiter);
 app.use('/api/auth', authRoutes);
 app.use('/api/auth/migrate', migrationRoutes);
 app.use('/api/auth/profile', profileRoutes);
+app.use('/api/chat', chatRoutes);
+app.use('/api/friends', friendRoutes);
+app.use('/api/posts', profilePostRoutes);
+app.use('/api/upload', uploadRoutes);
+app.use('/api/users', userRoutes);
 
 // 404 handler
 app.use((req, res) => {

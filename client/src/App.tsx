@@ -10,6 +10,11 @@ import { ForgotPasswordPage } from './pages/ForgotPasswordPage';
 import { ResetPasswordPage } from './pages/ResetPasswordPage';
 import { MigrationPage } from './pages/MigrationPage';
 import { AccountPage } from './pages/AccountPage';
+import { SettingsPage } from './pages/SettingsPage'; // Add this
+import { ChatPage } from './pages/ChatPage';
+import { FriendsPage } from './pages/FriendsPage';
+import { ProfilePage } from './pages/ProfilePage';
+import LandingPage from './pages/LandingPage';
 import './index.css';
 
 // Protected Route Component
@@ -53,7 +58,7 @@ const PublicRoute: React.FC<{ children: React.ReactNode }> = ({ children }) => {
 const AppRoutes: React.FC = () => {
   return (
     <Routes>
-      <Route path="/" element={<Navigate to="/login" replace />} />
+      <Route path="/" element={<LandingPage />} />
       <Route
         path="/login"
         element={
@@ -91,6 +96,38 @@ const AppRoutes: React.FC = () => {
         element={
           <ProtectedRoute>
             <AccountPage />
+          </ProtectedRoute>
+        }
+      />
+      <Route
+        path="/settings"
+        element={
+          <ProtectedRoute>
+            <SettingsPage />
+          </ProtectedRoute>
+        }
+      />
+      <Route
+        path="/chat"
+        element={
+          <ProtectedRoute>
+            <ChatPage />
+          </ProtectedRoute>
+        }
+      />
+      <Route
+        path="/friends"
+        element={
+          <ProtectedRoute>
+            <FriendsPage />
+          </ProtectedRoute>
+        }
+      />
+      <Route
+        path="/profile/:userId?"
+        element={
+          <ProtectedRoute>
+            <ProfilePage />
           </ProtectedRoute>
         }
       />
