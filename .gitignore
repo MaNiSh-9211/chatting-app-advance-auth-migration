@@ -141,3 +141,6 @@ dump.rdb
 *.crt
 .certificates/
 
+.env
+.env.*
+!*.env.example
